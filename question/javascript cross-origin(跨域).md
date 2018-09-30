@@ -22,8 +22,8 @@
         location / {
             add_header 'Access-Control-Allow-Origin' '*'; #允许来自所有的访问地址
             add_header 'Access-Control-Allow-Credentials' 'true';
-            add_header 'Access-Control-Allow-Methods' 'GET, PUT, POST, DELETE, OPTIONS, PATCH'; #支持请求方式
-            add_header 'Access-Control-Allow-Headers' 'cache-control,content-type,hash-referer,x-requested-with';
+            add_header 'Access-Control-Allow-Methods' 'GET, PUT, POST, DELETE, OPTIONS, PATCH'; #支持请求方式(不能为*，可能是有的浏览器（例如火狐浏览器）严格按照最新标准来的把)
+            add_header 'Access-Control-Allow-Headers' 'cache-control,content-type,hash-referer,x-requested-with'; #同上，不能为*
         }
         location /proxy {
             rewrite ^/proxy/(.*)$ /$1 break; #不一定非得要proxy这个路径
