@@ -12,20 +12,18 @@
 
 * 首先下载nginx并编译生成可执行文件，在根目录下的conf文件夹下有nginx.conf文件，向添加`location /{}`里面如下内容，然后添加`location/proxy {}`中的那些内容
 
-* 然后在服务器的Controller上添加注解`@CrossOrigin`。
-
-* 最后如果没启动nginx，则通过`sbin`目录下的`nginx`启动，否则要么先关闭nginx、再启动，要么`./nginx -s reload`
+* 最后如果没启动nginx，则通过`sbin`目录下的`nginx`启动，否则要么先关闭nginx、再启动，要么`./nginx -s reload -c ***nginx.conf文件绝对路径（相对路径不行）***`
 
 
 ```nginx
     server {
-        listen       8001; #这个是nginx监听的端口
+        listen       80; #这个是nginx监听的端口
         server_name  localhost;
         location / {
             add_header 'Access-Control-Allow-Origin' '*'; #允许来自所有的访问地址
             add_header 'Access-Control-Allow-Credentials' 'true';
-            add_header 'Access-Control-Allow-Methods' 'GET, PUT, POST, DELETE, OPTIONS'; #支持请求方式
-            add_header 'Access-Control-Allow-Headers' 'Content-Type,*';
+            add_header 'Access-Control-Allow-Methods' 'GET, PUT, POST, DELETE, OPTIONS, PATCH'; #支持请求方式
+            add_header 'Access-Control-Allow-Headers' 'cache-control,content-type,hash-referer,x-requested-with';
         }
         location /proxy {
             rewrite ^/proxy/(.*)$ /$1 break; #不一定非得要proxy这个路径
